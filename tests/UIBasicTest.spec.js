@@ -16,6 +16,7 @@ test('Page playwright test', async ({page})=> { // I can directly use page fixtu
     const termsCheckBox = page.locator("input[id='terms']");
     const signInBtn = page.locator("input[id='signInBtn']");
     const errorMsg = page.locator("[style*='block']");
+    const cardTitles = page.locator(".card-body a");
 
     await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
 
@@ -23,7 +24,7 @@ test('Page playwright test', async ({page})=> { // I can directly use page fixtu
     await expect(page).toHaveTitle("LoginPage Practise | Rahul Shetty Academy");
 
     await userName.fill("rahul");
-    await password.fill("Learning@830$3mK2)");
+    await password.fill("Learning@830$3mK2");
 
     await termsCheckBox.click();
     await signInBtn.click();
@@ -35,5 +36,7 @@ test('Page playwright test', async ({page})=> { // I can directly use page fixtu
     await signInBtn.click();
 
     await expect(page).toHaveTitle("ProtoCommerce");
-    await expect(page.locator("[class='card-title']")).toBeVisible();
+    await expect(cardTitles.nth(0)).toBeVisible();
+
+    await cardTitles.allTextContents().then(allTitles => console.log(allTitles));
 });
