@@ -18,7 +18,7 @@ test('Register account test', async ({page}) => {
     const userEmail = page.locator("input[id='userEmail']");
     const userPassword = page.locator("input[id='userPassword']");
     const loginBtn = page.locator("input[id='login']");
-    const firstItem = (page.locator("div[class*='card-body'] h5").first());
+    const items = page.locator("div[class*='card-body'] h5");
 
     await page.goto("https://rahulshettyacademy.com/client");
     console.log(await expect(page).toHaveTitle("Let's Shop"));
@@ -41,13 +41,14 @@ test('Register account test', async ({page}) => {
     await checkBox.check();
     await registerBtn.click();
 
-    expect(toastMsg).toHaveText("Registered Successfully");
+    await expect(toastMsg).toHaveText("Registered Successfully");
     await registerloginBtn.click();
 
     await userEmail.fill("juan@example.com");
     await userPassword.fill("Password123!");
     await loginBtn.click();
 
-    await expect(firstItem).toBeVisible();
-    console.log("First item: " + await firstItem.textContent());
+    await page.waitForLoadState('networkidle');
+    await expect(items.first()).toBeVisible();
+    console.log("List of items: " + await items.allTextContents());
 });
