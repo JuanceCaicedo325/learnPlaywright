@@ -12,7 +12,13 @@ const config =  ({
     timeout: 5000 //maximum time expect() should wait for the condition to be met
   },
 
-  reporter: 'html', //to see the test results in the terminal
+  reporter: [
+    
+    ['html', {
+      open: 'never', //open the report only if there are test failures
+      outputFolder: 'html-report'
+    }]
+  ],
   
   use: {
 
